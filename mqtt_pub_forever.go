@@ -3,8 +3,9 @@ package main
 import (
 "fmt"
 //import the Paho Go MQTT library
-MQTT "git.eclipse.org/gitroot/paho/org.eclipse.paho.mqtt.golang.git"
-"os"
+//MQTT "git.eclipse.org/gitroot/paho/org.eclipse.paho.mqtt.golang.git"
+	MQTT "git.eclipse.org/gitroot/paho/org.eclipse.paho.mqtt.golang.git"
+//"os"
 "time"
 "math/rand"
 	"encoding/json"
@@ -60,34 +61,32 @@ panic(token.Error())
 for {
 
 
-p := payload{
-	Cardid : rand.Intn(100),
-	Jobid  : rand.Intn(5),
-	Siteid : rand.Intn(100),
-	Value  : rand.Intn(100)*10,
-	Vendorid : rand.Intn(2000),
-	Timestamp :time.Now().Format(time.RFC3339),
-}
+	p := payload{
+		Cardid : rand.Intn(100),
+		Jobid  : rand.Intn(5),
+		Siteid : rand.Intn(100),
+		Value  : rand.Intn(100)*10,
+		Vendorid : rand.Intn(2000),
+		Timestamp :time.Now().Format(time.RFC3339),
+	}
 
-	ret ,_ :=  json.Marshal(p)
-	val := string(ret)
+		ret ,_ :=  json.Marshal(p)
+		val := string(ret)
 
 
-text := val
-	fmt.Println(text)
-token := c.Publish("go-mqtt/sample", 0, false, text)
-token.Wait()
-time.Sleep(20 * time.Second)
+	text := val
+		fmt.Println(text)
+		token := c.Publish("paybox", 0, false, text)
+		token.Wait()
+		//os.Exit(0)
+	time.Sleep(3 * time.Second)
 
 }
 
 
 
 //unsubscribe from /go-mqtt/sample
-if token := c.Unsubscribe("go-mqtt/sample"); token.Wait() && token.Error() != nil {
-fmt.Println(token.Error())
-os.Exit(1)
-}
+
 
 c.Disconnect(250)
 }
