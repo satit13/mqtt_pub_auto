@@ -79,7 +79,7 @@ for {
 		token := c.Publish("paybox", 0, false, text)
 		token.Wait()
 		//os.Exit(0)
-	time.Sleep(3 * time.Second)
+	time.Sleep(10 * time.Second)
 
 }
 
